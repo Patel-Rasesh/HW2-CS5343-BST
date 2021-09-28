@@ -1,4 +1,3 @@
-
 public class Handler {
 
 	public static void main(String[] args) {
@@ -46,11 +45,7 @@ public class Handler {
 		
 		testTree.inorderTraversal(root);
 		
-//		Node parentOfSuccessor = testTree.findSuccessor(newNode1.right);
-//		System.out.println(parentOfSuccessor.val);
-//		
-		Node newRoot = testTree.deleteFromBST(root, root);
-		//testTree.deleteFromBST(root, newNode9);
+		Node newRoot = testTree.deleteFromBST(root, newNode18);
 		System.out.println("\nafter deletion");
 		testTree.inorderTraversal(newRoot);
 	}
