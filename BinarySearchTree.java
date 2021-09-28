@@ -37,7 +37,7 @@ public class BinarySearchTree {
 		}
 	}
 	
-	public void deleteFromBST(Node root, Node node){
+	public Node deleteFromBST(Node root, Node node){
 		Node temp1 = root;
 		Node successorParent = null;
 		Node tempX = null;
@@ -50,6 +50,7 @@ public class BinarySearchTree {
 			successorParent.left.left = temp1.left;
 			root = successorParent.left;
 			successorParent.left = tempX;
+			return root;
 		}
 		else if(temp1.left == node) {
 			if(temp1.left.left == null && temp1.left.right == null) {
@@ -128,6 +129,7 @@ public class BinarySearchTree {
 		else if (temp1.val < node.val){
 			deleteFromBST(temp1.right, node);
 		}
+		return root;
 	}
 	public Node findPredecessor(Node node) {
 		//The right node of the concerning node needs to be passed in the argument

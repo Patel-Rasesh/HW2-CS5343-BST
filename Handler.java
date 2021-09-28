@@ -49,11 +49,10 @@ public class Handler {
 //		Node parentOfSuccessor = testTree.findSuccessor(newNode1.right);
 //		System.out.println(parentOfSuccessor.val);
 //		
-		testTree.deleteFromBST(root, newNode18);
+		Node newRoot = testTree.deleteFromBST(root, root);
 		//testTree.deleteFromBST(root, newNode9);
 		System.out.println("\nafter deletion");
-		testTree.inorderTraversal(root);
-		
+		testTree.inorderTraversal(newRoot);
 	}
 
 }
