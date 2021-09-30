@@ -128,12 +128,16 @@ public class BinarySearchTree {
 		 Returns - 				 root node of the tree (changed or unchanged)
 		 */
 		
-		Node temp1 = root;
-		Node successorParent = null;
-		
+		//Temp1 node is a primary incremental pointer
 		//tempSwap node is a temporary node used while changing the pointers 
+		Node temp1 = root;
 		Node tempSwap = null;
+		
+		//SuccessorParent and PredecessorParent are a parent of the successor node and
+		//predecessor node respectively
+		Node successorParent = null;
 		Node predecessorParent = null;
+		
 		if(root == node) {
 			
 			//When we want to delete the root node
@@ -148,34 +152,52 @@ public class BinarySearchTree {
 			return root;
 		}
 		else if(temp1.left == node) {
+			
+			//When the node is on the left of the reference node (temp1)
+			//and we encounter a leaf node that needs to be deleted
 			if(temp1.left.left == null && temp1.left.right == null) {
 				temp1.left = null;
 			}
 			else {
+				
 				successorParent = findSuccessor(temp1.left.right);
 				if(successorParent == null) {
-						//if successor is null, find predecessor
+						
+					//When successor is null, we find predecessor of the same node
 					predecessorParent = findPredecessor(temp1.left.left);
 					if(predecessorParent.left == null && predecessorParent.right == null) {
-
-						//***try with extending the tree where successor is absent but predecessor
-						//is far below
+						
+						//When the parent of a predecessor is a leaf node. Implying parent of a
+						//predecessor and predecessor itself are equal
 						temp1.left = predecessorParent;
 					}
 					else{
 						tempSwap = predecessorParent.right.left;
 					
-						predecessorParent.right.left = temp1.right.left;
-						predecessorParent.right.right = temp1.right.right;
-						temp1.right = predecessorParent.right;
+						predecessorParent.right.left = temp1.left.left;
+						predecessorParent.right.right = temp1.left.right;
+						temp1.left = predecessorParent.right;
 						predecessorParent.right = tempSwap;
 					}
 				}
 				else if(successorParent.left == null && successorParent.right == null) {
+					
+					//When the parent of a successor is a leaf node. Implying parent of a
+					//successor and successor itself are equal
+					successorParent.left = temp1.left.left;
+					temp1.left = successorParent;
+				}
+				else if(successorParent.left == null) {
+					
+					//When the parent of a successor does not have a left child. Implying 
+					//parent of a successor and successor itself are equal
 					successorParent.left = temp1.left.left;
 					temp1.left = successorParent;
 				}
 				else {
+					
+					//When we have both of the children and none of the above mentioned
+					//special case follows
 					tempSwap = successorParent.left.right;
 					
 					successorParent.left.right = temp1.left.right;
@@ -186,15 +208,22 @@ public class BinarySearchTree {
 			}
 		}
 		else if(temp1.right == node){
+			
+			//When the node is on the right of the reference node (temp1)
+			//and we encounter a leaf node that needs to be deleted
 			if(temp1.right.left == null && temp1.right.right == null) {
 				temp1.right = null;
 			}
 			else {
 				successorParent = findSuccessor(temp1.right.right);
 				
-				predecessorParent = findPredecessor(temp1.right.left);
 				if(successorParent == null) {
-					//if successor is null, find predecessor
+					
+					//When successor is null, we find predecessor of the same node
+					predecessorParent = findPredecessor(temp1.right.left);
+					
+					//When the parent of a predecessor is a leaf node. Implying parent of a
+					//predecessor and predecessor itself are equal
 					if(predecessorParent.left == null && predecessorParent.right == null) {
 						temp1.right = predecessorParent;
 					}
@@ -207,10 +236,23 @@ public class BinarySearchTree {
 					}
 				}
 				else if(successorParent.left == null && successorParent.right == null) {
+					
+					//When the parent of a successor is a leaf node. Implying parent of a
+					//successor and successor itself are equal
+					successorParent.left = temp1.right.left;
+					temp1.right = successorParent;
+				}
+				else if(successorParent.left == null) {
+					
+					//When the parent of a successor does not have a left child. Implying 
+					//parent of a successor and successor itself are equal
 					successorParent.left = temp1.right.left;
 					temp1.right = successorParent;
 				}
 				else {
+					
+					//When we have both of the children and none of the above mentioned
+					//special case follows
 					tempSwap = successorParent.left.right;
 					successorParent.left.right = temp1.right.right;
 					successorParent.left.left = temp1.right.left;
@@ -219,7 +261,11 @@ public class BinarySearchTree {
 				}
 			}
 		}
+		
+		//Recursive calls until the node that needs to be deleted is found as either of
+		//the children of temp1 (reference node)
 		else if (temp1.val > node.val){
+			
 			deleteFromBST(temp1.left, node);
 		}
 		else if (temp1.val < node.val){

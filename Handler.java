@@ -42,11 +42,12 @@ public class Handler {
 		testTree.insertToBST(root, newNode16);
 		testTree.insertToBST(root, newNode17);
 		testTree.insertToBST(root, newNode18);
-		
+	
+		System.out.println("Inorder traversal before deletion");
 		testTree.inorderTraversal(root);
-		
+		System.out.println("\n\nDeleting a node");
 		Node newRoot = testTree.deleteFromBST(root, newNode18);
-		System.out.println("\nafter deletion");
+		System.out.println("Inorder traversal after deletion");
 		testTree.inorderTraversal(newRoot);
 	}
 
